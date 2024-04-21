@@ -20,7 +20,7 @@ devtools::install_github("MimShara1/forchange")
 ```
 ##Functions
 
-```
+
 
 This package employs 3 functions to examine the forest cover change between two timesteps. 
 
@@ -28,13 +28,12 @@ formask: Creates a binary raster of forest mask assigning forest class value in 
 diff_ndvi: Creates a single layer raster representing ndvi difference between two timesteps
 forchange: Calculates the forest loss using landscape statistics
 
-```
+
 
 
 
 ## Example
 
-```
 
 Here are few examples how this package works. In this example we have used Landsat 5 and Landsat 8 sensor data for two different timesteps. For first timestep (2000) we have used Landsat 5 and for second timestep (2020) we have used Landsat 8. 
 
@@ -42,14 +41,7 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
 
 ```
-   library(raster)
-   library(sp)
-   library(sf)
-   library(RStoolbox)
-   library(caret)
-   library(randomForest)
-   library(ggplot2)
-   library(terra)
+  
 
 
     ## Read data and define parameters
@@ -64,6 +56,8 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
 
 ```
+
+
 
 
 
