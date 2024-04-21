@@ -27,7 +27,6 @@ library(sf)
 library(RStoolbox)
 library(caret)
 library(randomForest)
-library(ggplot2)
 library(terra)
 
 ras_stack_path <- system.file("extdata", "roi_2000.tif", package="forchange")

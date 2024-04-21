@@ -21,7 +21,6 @@
 #'library(RStoolbox)
 #'library(caret)
 #'library(randomForest)
-#'library(ggplot2)
 #'library(terra)
 #'
 #'

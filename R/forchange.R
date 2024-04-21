@@ -13,11 +13,9 @@
 #'library(raster)
 #'library(sp)
 #'library(sf)
-#'library(mapview)
 #'library(RStoolbox)
 #'library(caret)
 #'library(randomForest)
-#'library(ggplot2)
 #'library(terra)
 #'
 #'
