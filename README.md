@@ -18,7 +18,7 @@ The developed version of  forchange can be installed  from
 devtools::install_github("MimShara1/forchange")
 
 ```
-##Functions
+## Functions
 
 
 
@@ -63,7 +63,7 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
 
 
-
+```
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
 
@@ -84,15 +84,19 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
  d_ndvi <- diff_ndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
  plot(d_ndvi)
-
-
+ 
 ```
 
 
 
 
 
-![ndvi difference](man/figures/dndvi.png)
+ ![ndvi difference](man/figures/dndvi.png)
+
+
+
+
+
 
 
 
@@ -101,12 +105,6 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
 
 ```
-
-
-
-
-
-
 
  3.This function quantify the change using landscape statistics
 
