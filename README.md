@@ -1,23 +1,12 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 
 # forchange
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of forchange is to calculate the decadal forest loss in a
-specific area. It equips users with necessary tools to determine the
-vegetation change by calculating NDVI difference between two different
-timesteps and quantifying change with landscape statistics.This package
-offers 3 functions to compute decadal forest change. Function formask
-employs masking operation to only extract forest from a rasterstack
-where users need to designate training polygons and landuse classes.
-Function defndvi calculates the difference image of NDVIs’ from two
-different timesteps.Such change comparison should be conducted on images
-acquired of the same season or month and to observe more variation of
-change more than two timesteps are ideal.forchange function simply
-quantify the change by calculating the area of change and no change.
+forchange is a R package designed to calculate the forest loss for monitoring the changes in forest cover between two different timesteps, typically spanning a decade.
 
 ## Installation
 
@@ -31,59 +20,71 @@ devtools::install_github("MimShara1/forchange")
 
 ## Example
 
-1.This function calculates forest mask
+```
+Functions
 
-    ## Reading data and define parameters
+This package employs 3 functions to examine the forest cover change between two timesteps. 
+
+formask: Creates a binary raster of forest mask assigning forest class value in a landuse classified raster
+diff_ndvi: Creates a single layer raster representing ndvi difference between two timesteps
+forchange: Calculates the forest loss using landscape statistics
+
+```
+Here are few examples how this package works. In this example we have used Landsat 5 and Landsat 8 sensor data for two different timesteps. For first timestep (2000) we have used Landsat 5 and for second timestep (2020) we have used Landsat 8. 
+
+Part I: This is the example of formask function. Inside of  this function we have a raster stack where we assign a vector character to assign the band names to available bands. from this stack we first extract landuse classification raster and later from the newly created raster we extract forest mask by assigning forest class value for masking the forest. For the landuse classification we also used a vector file containing training polygons.The training polygons needs to be created manually as we do not have ground truth data. The training polygons have been created in QGIS and reprojected same as the raster stack. Simple yet crucial operation for further workflow. The stack  and reprojection has been performed in QGIS but users can also conduct this in R using stack function from Raster for stack and spTransform for reprojection from sp.
+
+   library(raster)
+   library(sp)
+   library(sf)
+   library(RStoolbox)
+   library(caret)
+   library(randomForest)
+   library(ggplot2)
+   library(terra)
+
+
+    ## Read data and define parameters
         ras_stack_path <- system.file("extdata", "roi_2000.tif", package="forchange")
         ras_stack <- stack(ras_stack_path)
         tr_samp_path <- system.file("extdata", "samples2000.gpkg", package = "forchange")
         tr_samp <- st_read(tr_samp_path)
         bandnames <- c("B01", "B02", "B03", "B04", "B05", "B06", "B07")
 
-        #Calculating the forest mask
+        #Calculate the forest mask
         formask(ras_stack,bandnames,tr_samp)
 
 <figure>
-<img src="man/figures/forest_mask.tif" alt="forest mask" />
+< />
 <figcaption aria-hidden="true">forest mask</figcaption>
 </figure>
 
+```
+ t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
+ t1_nir <- raster(t1_nir_path)
+
+ t1_red_path <- system.file("extdata", "l5_red.tif", package="forchange")
+ t1_red <- raster(t1_red_path)
+
+
+ t2_nir_path <- system.file("extdata", "l8_nir.tif", package="forchange")
+ t2_nir <- raster(t2_nir_path)
+
+ t2_red_path <- system.file("extdata", "l8_red.tif", package="forchange")
+ t2_red <- raster(t2_red_path)
+ 
+ mask_path <- system.file("extdata", "forest_mask.tif", package="forchange")
+ mask<- raster(mask_path)
+
+ diff_ndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
+
+ d_ndvi <- diff_ndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
+ plot(d_ndvi)
 
 
 
 
-2 This function calculates the NDVI difference
-
-
-         ras_stack_path <- system.file("extdata", "roi_2000.tif", package="forchange")
-         ras_stack <- stack(ras_stack_path)
-
-         tr_samp_path <- system.file("extdata", "samples2000.gpkg", package = "forchange")
-         tr_samp <- st_read(tr_samp_path)
-
-         bandnames <- c("B01", "B02", "B03", "B04", "B05", "B06", "B07")
-
-
-         t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
-         t1_nir <- raster(t1_nir_path)
-
-         t1_red_path <- system.file("extdata", "l5_red.tif", package="forchange")
-         t1_red <- raster(t1_red_path)
-
-
-         t2_nir_path <- system.file("extdata", "l8_nir.tif", package="forchange")
-         t2_nir <- raster(t2_nir_path)
-
-         t2_red_path <- system.file("extdata", "l8_red.tif", package="forchange")
-         t2_red <- raster(t2_red_path)
-
-         mask <- formask(ras_stack,bandnames,tr_samp)
-
-
-         #Calculating the NDVI difference
-         d_ndvi <- defndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
-         hist(d_ndvi,col="tan", border="white",xlab = "NDVI Difference",
-         ylab = "Frequency", xlim = c(-1, 1),ylim = c(0, 15000))``
+        
 
 \`\`\`\` ![ndvi difference](man/figures/dndvi.png)
 
@@ -122,5 +123,4 @@ forchange(def_NDVI, threshold)
 <figcaption aria-hidden="true">forest change</figcaption>
 </figure>
 
-\`\`\` In that case, don’t forget to commit and push the resulting
-figure files, so they display on GitHub and CRAN.
+
