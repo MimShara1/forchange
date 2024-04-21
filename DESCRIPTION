@@ -1,0 +1,14 @@
+Package: forchange
+Type: Package
+Title: Examining decadal forest change through calculating decadal forest loss between two timesteps
+Version: 0.1.0
+Author: Sharmin Shara Mim
+Maintainer: The package maintainer Sharmin Shara Mim<sharmin.mim@stud-mail.uni-wuerzburg.de>
+Description: The package is a toolkit for users to calculate the forest loss of a specific area to monitor the forest change  between two timesteps. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+RoxygenNote: 7.3.1
+Imports: raster,sp,sf,RStoolbox,caret,terra,randomForest,ggplot2
+Suggests: knitr, rmarkdown
+NeedsCompilation: no
+Packaged: 2024-04-21 14:22:15 UTC; MimShara
