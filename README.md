@@ -16,12 +16,11 @@ The developed version of  forchange can be installed  from
 ``` r
 # install.packages("devtools")
 devtools::install_github("MimShara1/forchange")
-```
-
-## Example
 
 ```
-Functions
+##Functions
+
+```
 
 This package employs 3 functions to examine the forest cover change between two timesteps. 
 
@@ -30,10 +29,19 @@ diff_ndvi: Creates a single layer raster representing ndvi difference between tw
 forchange: Calculates the forest loss using landscape statistics
 
 ```
+
+
+
+## Example
+
+```
+
 Here are few examples how this package works. In this example we have used Landsat 5 and Landsat 8 sensor data for two different timesteps. For first timestep (2000) we have used Landsat 5 and for second timestep (2020) we have used Landsat 8. 
 
 Part I: This is the example of formask function. Inside of  this function we have a raster stack where we assign a vector character to assign the band names to available bands. from this stack we first extract landuse classification raster and later from the newly created raster we extract forest mask by assigning forest class value for masking the forest. For the landuse classification we also used a vector file containing training polygons.The training polygons needs to be created manually as we do not have ground truth data. The training polygons have been created in QGIS and reprojected same as the raster stack. Simple yet crucial operation for further workflow. The stack  and reprojection has been performed in QGIS but users can also conduct this in R using stack function from Raster for stack and spTransform for reprojection from sp.
 
+
+```
    library(raster)
    library(sp)
    library(sf)
@@ -54,12 +62,12 @@ Part I: This is the example of formask function. Inside of  this function we hav
         #Calculate the forest mask
         formask(ras_stack,bandnames,tr_samp)
 
-<figure>
-< />
-<figcaption aria-hidden="true">forest mask</figcaption>
-</figure>
 
 ```
+
+
+
+
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
 
@@ -84,9 +92,10 @@ Part I: This is the example of formask function. Inside of  this function we hav
 
 
 
-        
+```
+![ndvi difference](man/figures/dndvi.png)
 
-\`\`\`\` ![ndvi difference](man/figures/dndvi.png)
+```
 
 
 
