@@ -71,6 +71,15 @@ Part II: diff_ndvi function calculates the NDVI using NIR and red bands from two
 
 
 ```
+  library(raster)
+  library(sp)
+  library(sf)
+  library(terra)
+ 
+ 
+ 
+ 
+ 
  #Load data
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
@@ -107,19 +116,18 @@ Part II: diff_ndvi function calculates the NDVI using NIR and red bands from two
 
 
 
-
-
-
-
+Part III: This function quantify the change using landscape statistics. This has dependency on previous function "diff_ndvi". This calls the "diff_ndvi" function and pass the threshold argument by specifying a value. Threshold could be any value set by user from the NDVI difference range to create a binary raster for monitoring the extent of change. Then the general statistics are extracted on the binary raster to measure change. 
 
 
 
 
 ```
+  library(raster)
+  library(sp)
+  library(sf)
+  library(terra)
 
- 3.This function quantify the change using landscape statistics
-
-
+ #Call the diff_ndvi function
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
 
@@ -139,12 +147,32 @@ Part II: diff_ndvi function calculates the NDVI using NIR and red bands from two
  diff_ndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
  
  diff_NDVI <- diff_ndvi(t1_nir, t1_red, t2_nir, t2_red, mask)
-
+ 
+ #Set the threshold value before calculation
  threshold <- -0.2
 
-
+ #Calculation of change and no change area
  forchange(diff_NDVI, threshold)
 
 ```
+Part IV: Better Visualization of analysis results make it more interpretable. The following example is not part of this package function but used to show better interpretable result. 
+
+```
+# Create a barplot using ggplot to display the magnitude of change
+barplot <- ggplot(change_area_df, aes(x = Category, y = Area_km2, fill = Category)) +
+  geom_bar(stat = "identity", width = 0.6) +  
+  labs(title = "Forest Area Change between 2000-2020",
+       x = "Category",
+       y = "Area (km2)") +
+  geom_text(aes(label = paste0(Area_km2, " km2")), vjust = -0.5) + 
+  theme_minimal() +  
+  scale_y_continuous(limits = c(0, 300)) +  # Set manual y-axis limits
+  theme(plot.title = element_text(hjust = 0.5))  # Center the title
+
+# Show the barplot
+print(barplot)
+```
+
+![change area](man/figures/change.png)
 
 
