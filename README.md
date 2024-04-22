@@ -77,9 +77,6 @@ Part II: diff_ndvi function calculates the NDVI using NIR and red bands from two
   library(terra)
  
  
- 
- 
- 
  #Load data
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
@@ -126,7 +123,8 @@ Part III: This function quantify the change using landscape statistics. This has
   library(sp)
   library(sf)
   library(terra)
-
+  
+  
  #Call the diff_ndvi function
  t1_nir_path <- system.file("extdata", "l5_nir.tif", package="forchange")
  t1_nir <- raster(t1_nir_path)
@@ -158,8 +156,10 @@ Part III: This function quantify the change using landscape statistics. This has
 Part IV: Better Visualization of analysis results make it more interpretable. The following example is not part of this package function but used to show better interpretable result. 
 
 ```
+library(ggplot2)
+
 # Create a barplot using ggplot to display the magnitude of change
-barplot <- ggplot(change_area_df, aes(x = Category, y = Area_km2, fill = Category)) +
+change_plot <- ggplot(change_area_df, aes(x = Category, y = Area_km2, fill = Category)) +
   geom_bar(stat = "identity", width = 0.6) +  
   labs(title = "Forest Area Change between 2000-2020",
        x = "Category",
@@ -170,7 +170,7 @@ barplot <- ggplot(change_area_df, aes(x = Category, y = Area_km2, fill = Categor
   theme(plot.title = element_text(hjust = 0.5))  # Center the title
 
 # Show the barplot
-print(barplot)
+print(change_plot)
 ```
 
 ![change area](man/figures/change.png)
